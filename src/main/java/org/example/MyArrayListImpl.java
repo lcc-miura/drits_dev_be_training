@@ -16,7 +16,7 @@ public class MyArrayListImpl<E> implements MyList<E>{
         elements[size] = e;
         size++;
         return true;
-    };
+    }
 
     public void add(int index, E e) throws ArrayIndexOutOfBoundsException {
         if(size == elements.length) ensureCapacity();
@@ -27,7 +27,7 @@ public class MyArrayListImpl<E> implements MyList<E>{
         System.arraycopy(behindIndexList, 0, elements, index + 1, behindIndexList.length);
 
         size++;
-    };
+    }
 
     public boolean contains(Object o) {
         return Arrays.stream(elements)
@@ -37,11 +37,11 @@ public class MyArrayListImpl<E> implements MyList<E>{
             })
             .map(el -> true)
             .findFirst().orElse(false);
-    };
+    }
 
     public E get(int index) throws ArrayIndexOutOfBoundsException {
         return (E) elements[index];
-    };
+    }
 
     public E remove(int index) throws ArrayIndexOutOfBoundsException {
         var val = (E)elements[index];
@@ -55,11 +55,11 @@ public class MyArrayListImpl<E> implements MyList<E>{
         size--;
         this.elements = newList;
         return val;
-    };
+    }
 
     public Object[] toArray() {
         return Arrays.copyOfRange(elements, 0, size);
-    };
+    }
 
     public int size() {
         return size;
