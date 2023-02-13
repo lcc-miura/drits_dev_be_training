@@ -3,6 +3,8 @@ import org.example.MyList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MyArrayListImplTest {
@@ -64,7 +66,7 @@ public class MyArrayListImplTest {
         target.remove(1);
         var result = target.toArray();
 
-        assertEquals(expected, result);
+        assertArrayEquals(expected, result);
     }
 
     @Test
@@ -77,7 +79,7 @@ public class MyArrayListImplTest {
 
         var result = target.toArray();
 
-        assertEquals(expected, result);
+        assertArrayEquals(expected, result);
     }
 
     @Test
