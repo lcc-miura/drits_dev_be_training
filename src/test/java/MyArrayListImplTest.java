@@ -1,10 +1,10 @@
 import org.example.MyArrayListImpl;
 import org.example.MyList;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MyArrayListImplTest {
     String el1 = "ELEMENT1";
@@ -48,12 +48,24 @@ public class MyArrayListImplTest {
         assertArrayEquals(expected, result);
     }
 
-    @Test
-    void contains() {
+    @Nested
+    class contains {
+        @Test
+        void containsOfEl() {
         var result = target.contains(el1);
 
-        assertEquals(true, result);
+            assertTrue(result);
+        }
+
+        @Test
+        void containsOfNull() {
+            target.add(null);
+            var result = target.contains(null);
+
+            assertTrue(result);
+        }
     }
+
 
     @Test
     void get() {

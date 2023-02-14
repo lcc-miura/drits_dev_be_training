@@ -30,9 +30,11 @@ public class MyArrayListImpl<E> implements MyList<E>{
     }
 
     public boolean contains(Object o) {
-        return Arrays.stream(elements)
+        var tmpList = Arrays.copyOfRange(elements, 0, size);
+
+        return Arrays.stream(tmpList)
             .filter(el -> {
-                if(el == null) return false;
+                if(el == null) return el == o;
                 return el.equals(o);
             })
             .map(el -> true)
