@@ -3,7 +3,6 @@ import org.example.MyList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -35,11 +34,18 @@ public class MyArrayListImplTest {
 
     @Test
     void indexAdd() {
-        var i = 1;
-        target.add(i, el4);
-        var result = target.get(i);
+        target.add(1, el4);
 
-        assertEquals(el4, result);
+        Object[] expected = {
+                el1,
+                el4,
+                el2,
+                el3
+        };
+
+        var result = target.toArray();
+
+        assertArrayEquals(expected, result);
     }
 
     @Test
