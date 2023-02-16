@@ -35,12 +35,12 @@ public class MyArrayListImpl<E> implements MyList<E>{
     }
 
     public E get(int index) {
-        if( index < 0 || index > size ) throw new IndexOutOfBoundsException(index);
+        if( index < 0 || index > size - 1 ) throw new IndexOutOfBoundsException(index);
         return (E) elements[index];
     }
 
     public E remove(int index) {
-        if( index < 0 || index > size ) throw new IndexOutOfBoundsException(index);
+        if( index < 0 || index > size - 1 ) throw new IndexOutOfBoundsException(index);
         var val = (E)elements[index];
 
         var newList = new Object[elements.length];
