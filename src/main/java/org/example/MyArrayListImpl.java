@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class MyArrayListImpl<E> implements MyList<E>{
     private Object[] elements;
@@ -18,34 +19,28 @@ public class MyArrayListImpl<E> implements MyList<E>{
         return true;
     }
 
-    public void add(int index, E e) throws ArrayIndexOutOfBoundsException {
+    public void add(int index, E e) {
+        if( index < 0 || index > size ) throw new IndexOutOfBoundsException(index);
         if(size == elements.length) ensureCapacity();
 
-        Object[] behindIndexList = Arrays.copyOfRange(elements, index, size);
+        System.arraycopy( elements, index, elements, index + 1, size - index );
         elements[index] = e;
-
-        System.arraycopy(behindIndexList, 0, elements, index + 1, behindIndexList.length);
 
         size++;
     }
 
     public boolean contains(Object o) {
-        var tmpList = Arrays.copyOfRange(elements, 0, size);
-
-        return Arrays.stream(tmpList)
-            .filter(el -> {
-                if(el == null) return el == o;
-                return el.equals(o);
-            })
-            .map(el -> true)
-            .findFirst().orElse(false);
+        return Arrays.stream( elements, 0, size )
+                .anyMatch( el -> Objects.equals( o, el ) );
     }
 
-    public E get(int index) throws ArrayIndexOutOfBoundsException {
+    public E get(int index) {
+        if( index < 0 || index > size ) throw new IndexOutOfBoundsException(index);
         return (E) elements[index];
     }
 
-    public E remove(int index) throws ArrayIndexOutOfBoundsException {
+    public E remove(int index) {
+        if( index < 0 || index > size ) throw new IndexOutOfBoundsException(index);
         var val = (E)elements[index];
 
         var newList = new Object[elements.length];
