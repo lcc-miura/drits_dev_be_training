@@ -9,10 +9,9 @@ public class Encrypt1Test {
 
     @Test
     void encrypt() {
-        target.encrypt("ABCDEFGHIJKL");
-
         var expected = "ADGJBEHKCFIL";
-        var result = "ADGJBEHKCFIL";
+        var result = target.encrypt("ABCDEFGHIJKL");
+
         assertEquals(expected, result);
     }
 }
