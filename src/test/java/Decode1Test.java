@@ -9,10 +9,8 @@ public class Decode1Test {
 
     @Test
     void encrypt() {
-        target.decode("ADGJBEHKCFIL");
-
         var expected = "ABCDEFGHIJKL";
-        var result = "ABCDEFGHIJKL";
+        var result = target.decode("ADGJBEHKCFIL");
 
         assertEquals(expected, result);
     }

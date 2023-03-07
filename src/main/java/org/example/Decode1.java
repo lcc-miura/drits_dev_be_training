@@ -8,8 +8,9 @@ public class Decode1 implements Decode{
         var sb = new StringBuffer();
 
         int delimiterNum = s.length() / n;
-        for(var i = 0; i < n; i++) {
-            for(var j = delimiterNum; j < n; j += delimiterNum) {
+
+        for(var i = 0; i < delimiterNum; i++) {
+            for(var j = i; j < s.length(); j += delimiterNum) {
                 sb.append( s.charAt(j) );
             }
         }
