@@ -1,27 +1,46 @@
 package org.example;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.sql.Array;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Encrypt3 implements Encrypt {
 
-    private final Map<String, Integer> map = new LinkedHashMap<>();
+    public String encrypt(String s ) {
 
-    public String encrypt( String s ) {
+        return Arrays.stream( s.split("") ).reduce(
+            new ArrayList<Map<String, Integer>>(),
+            (accum, map) -> {
+                if( accum.size() == 0 ) {
+                    accum.add( Map.of(map, 1) );
+                    return accum;
+                }
 
-        for(String str : s.split("")) {
-            if(map.containsKey(str)) {
-                map.replace(str, map.get(str) + 1);
-            } else {
-                map.put(str, 1);
-            }
+                var beforeMap = accum.get(accum.size() - 1);
+                var beforeKey = getKeyOfFirstEntryInMap(beforeMap);
+
+                if( !map.equals(beforeKey) ) {
+                    accum.add( Map.of(map, 1) );
+                    return accum;
+                }
+
+                accum.remove(accum.size() - 1);
+                accum.add( Map.of(beforeKey, beforeMap.get(beforeKey) + 1) );
+                return accum;
+            },
+            (c1, c2) -> null
+        ).stream().map(map -> {
+            var key = getKeyOfFirstEntryInMap(map);
+            return key + map.get(key);
+        }).collect( Collectors.joining() );
+    }
+
+    private String getKeyOfFirstEntryInMap(Map<String, Integer> map) {
+        String key = "";
+        for (String tmpKey : map.keySet()) {
+            key = tmpKey;
         }
-
-        return map.entrySet().stream()
-            .reduce(
-                "",
-                (accum, e) -> accum + e.getKey() + e.getValue(),
-                (c1, c2) -> null
-            );
+        return key;
     }
 }
