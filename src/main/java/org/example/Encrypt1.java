@@ -1,7 +1,6 @@
 package org.example;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,7 +12,7 @@ public class Encrypt1 implements Encrypt{
 
     public String encrypt( String s ){
 
-        ArrayList<List<String>> arr = generateArray(n);
+        var arr = generateArray(n);
 
         return Stream.iterate(
                 new IndexAndVal(0, String.valueOf( s.charAt(0) )),
@@ -22,9 +21,7 @@ public class Encrypt1 implements Encrypt{
             .reduce(
                 new ArrayList<>(arr),
                 (accum, iav) -> {
-                    for(int i = 0; i < n; i++) {
-                        if(iav.index % n == i) accum.get(i).add(iav.val);
-                    }
+                    accum.get(iav.index % n).add(iav.val);
                     return accum;
                 },
                 (c1, c2) -> null
@@ -33,7 +30,7 @@ public class Encrypt1 implements Encrypt{
             .collect(Collectors.joining());
     }
 
-    private ArrayList<List<String>> generateArray(int n) {
+    private List<List<String>> generateArray(int n) {
         ArrayList<List<String>> arr = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             arr.add(new ArrayList<>());
