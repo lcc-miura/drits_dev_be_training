@@ -2,6 +2,7 @@ package org.example;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Encrypt2 implements Encrypt {
 
@@ -14,8 +15,7 @@ public class Encrypt2 implements Encrypt {
                 if(str.matches("[a-z]")) return toNextChar(str, 'a', 26);
                 return str;
             })
-            .reduce((result, str) -> result + str)
-            .orElse("");
+            .collect( Collectors.joining() );
     }
 
     public String toNextChar(String str, int baseNum, int count){
