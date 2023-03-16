@@ -14,16 +14,14 @@ public class Encrypt1 implements Encrypt{
     public String encrypt( String s ){
 
         return Stream.iterate(
-                new IndexAndVal(0, String.valueOf( s.charAt(0) )),
-                iav -> new IndexAndVal(iav.index + 1, String.valueOf( s.charAt(iav.index + 1) ))
+            new IndexAndVal(0, String.valueOf( s.charAt(0) )),
+            iav -> new IndexAndVal(iav.index + 1, String.valueOf( s.charAt(iav.index + 1) ))
         ).limit(s.length())
         .reduce(
             new ArrayList<List<String>>( Arrays.asList( new ArrayList<>(), new ArrayList<>(), new ArrayList<>() ) ),
             (accum, iav) -> {
-                switch (iav.index % n) {
-                    case 0 -> accum.get(0).add(iav.val);
-                    case 1 -> accum.get(1).add(iav.val);
-                    case 2 -> accum.get(2).add(iav.val);
+                for (int i = 0; i < n; i++) {
+                    if(iav.index % n == i) accum.get(i).add(iav.val);
                 }
                 return accum;
             },
