@@ -5,9 +5,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Encrypt1 implements Encrypt{
-    private final int n = 3;
+
+    private final int numSegment;
     record PositionAndVal( int position, char val ){}
 
+    public Encrypt1(int numSegment) {
+        this.numSegment = numSegment;
+    }
 
     public String encrypt( String s ) {
 
@@ -24,7 +28,7 @@ public class Encrypt1 implements Encrypt{
     }
 
     private int getDestinationPosition(int idxSource, int length) {
-        return (idxSource % n) * (length / n) + idxSource / n;
+        return (idxSource % numSegment) * (length / numSegment) + idxSource / numSegment;
     }
 
     private PositionAndVal createNextPositionAndVal(PositionAndVal pov, String s) {

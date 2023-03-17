@@ -5,10 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Encrypt1Test {
 
-    private final Encrypt target = new Encrypt1();
-
     @Test
     void encrypt() {
+        var numSegment = 3;
+        var target = new Encrypt1(numSegment);
+
         var expected = "ADGJBEHKCFIL";
         var result = target.encrypt("ABCDEFGHIJKL");
 
