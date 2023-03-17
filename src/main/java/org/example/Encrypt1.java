@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 
 public class Encrypt1 implements Encrypt{
     private final int n = 3;
-    record PositionAndVal( int before, int after, char val ){}
+    record PositionAndVal( int position, char val ){}
 
     private int getTransformPosition(int index, int length) {
         return (index % n) * (length / n) + index / n;
@@ -18,12 +18,10 @@ public class Encrypt1 implements Encrypt{
 
         return
             Stream
-                .iterate(
-                    new PositionAndVal(0, 0, s.charAt(0)),
-                    pov -> new PositionAndVal(pov.before + 1, getTransformPosition(pov.before + 1, length), s.charAt(pov.before + 1))
-                )
+                .iterate(new PositionAndVal(0, s.charAt(0)), pov -> new PositionAndVal(pov.position + 1, s.charAt(pov.position + 1)))
+                .map(pov -> new PositionAndVal(getTransformPosition(pov.position, length), pov.val))
                 .limit(length)
-                .sorted(Comparator.comparingInt(e -> e.after))
+                .sorted(Comparator.comparingInt(e -> e.position))
                 .map(el -> String.valueOf(el.val))
                 .collect(Collectors.joining());
     }
