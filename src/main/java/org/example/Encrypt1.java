@@ -8,9 +8,6 @@ public class Encrypt1 implements Encrypt{
     private final int n = 3;
     record PositionAndVal( int position, char val ){}
 
-    private int getTransformPosition(int index, int length) {
-        return (index % n) * (length / n) + index / n;
-    }
 
     public String encrypt( String s ) {
 
@@ -18,11 +15,20 @@ public class Encrypt1 implements Encrypt{
 
         return
             Stream
-                .iterate(new PositionAndVal(0, s.charAt(0)), pov -> new PositionAndVal(pov.position + 1, s.charAt(pov.position + 1)))
-                .map(pov -> new PositionAndVal(getTransformPosition(pov.position, length), pov.val))
+                .iterate(new PositionAndVal(0, s.charAt(0)), pov -> createNextPositionAndVal(pov, s))
+                .map(pov -> new PositionAndVal(getDestinationPosition(pov.position, length), pov.val))
                 .limit(length)
                 .sorted(Comparator.comparingInt(e -> e.position))
                 .map(el -> String.valueOf(el.val))
                 .collect(Collectors.joining());
+    }
+
+    private int getDestinationPosition(int idxSource, int length) {
+        return (idxSource % n) * (length / n) + idxSource / n;
+    }
+
+    private PositionAndVal createNextPositionAndVal(PositionAndVal pov, String s) {
+        var nextPosition = pov.position + 1;
+        return new PositionAndVal(nextPosition, s.charAt(nextPosition));
     }
 }
