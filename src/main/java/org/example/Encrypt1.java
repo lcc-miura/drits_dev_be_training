@@ -17,6 +17,8 @@ public class Encrypt1 implements Encrypt{
 
         final int length = s.length();
 
+        if(length % numSegment != 0) throw new IllegalArgumentException();
+
         return
             Stream
                 .iterate(new PositionAndVal(0, s.charAt(0)), pov -> createNextPositionAndVal(pov, s))
